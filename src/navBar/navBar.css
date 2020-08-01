@@ -1,0 +1,8 @@
+.navItems{
+  color: white !important;
+  cursor: pointer;
+}
+
+.activeTab{
+  background: #737373;
+}

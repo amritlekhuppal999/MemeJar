@@ -1,0 +1,10 @@
+.images{
+  color: green;
+}
+
+.cardLike{
+  cursor: pointer;
+}
+.cardSave{
+  cursor: pointer;
+}

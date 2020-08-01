@@ -1,0 +1,10 @@
+.audio{
+  color: yellow;
+}
+
+.cardLike{
+  cursor: pointer;
+}
+.cardSave{
+  cursor: pointer;
+}
