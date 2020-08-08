@@ -2,9 +2,15 @@
   color: yellow;
 }
 
-.cardLike{
+.cardLike, .cardSave, .editSave{
   cursor: pointer;
 }
-.cardSave{
-  cursor: pointer;
+.optBTN{
+  /* position: relative;*/
+  cursor: default !important;
+  /* margin-bottom: 2px;  */
+}
+
+.imgxx:hover{
+  opacity: 1 !important;
 }

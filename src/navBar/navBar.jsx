@@ -5,6 +5,7 @@ import Audio from '../loadPages/audio/audio.jsx';
 import Video from '../loadPages/video/video.jsx';
 import Image from '../loadPages/image/image.jsx';
 import DefaultPage from '../loadPages/defaultPage.jsx';
+//import AlertBox from '../components/alert/alert.jsx';
 
 import {
   BrowserRouter as Router,
@@ -58,6 +59,7 @@ class NavBar extends Component{
 
         {/*Routes from manageRoutes*/}
         <AllRoutes />
+
       </Router>
     );
   }
