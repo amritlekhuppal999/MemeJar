@@ -7,7 +7,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDownload, faEye, faThumbsUp, faBookmark, faPen, faHandPeace} from '@fortawesome/free-solid-svg-icons';
 import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import UseModal from '../../components/modal/modal.jsx';
+import ImgModal from '../../components/modal/imgModal.jsx';
+import PageHeader from '../../components/pageHeader/pageHeader.jsx';
 
 toast.configure();
 class Image extends Component {
@@ -18,7 +19,7 @@ class Image extends Component {
 
   render(){
     return(
-      <div>
+      <div className="imageBody">
         <ImageBody />
       </div>
      );
@@ -49,8 +50,10 @@ class ImageBody extends Component{
               <div className="card card-default"> {/*text-white bg-dark*/}
 
                 {/*Card Header*/}
-                <div className="card-header">
-                  <div className="card-title float-right"><b>Add Search Bar</b></div>
+                <div className="card-header" style={{paddingBottom:"0"}}>
+                  <div className="card-title">
+                    <PageHeader />
+                  </div>
                 </div>
 
                 {/*Card Body*/}
@@ -159,7 +162,7 @@ class SubCardGroup extends Component{
             <p className="card-text">
               <small className="text-muted"><b>{peopleLiked}</b></small>
             </p>
-            
+
             <p className="card-text">
               <label className="btn btn-light optBTN">
                 {/*Like*/}
@@ -173,7 +176,7 @@ class SubCardGroup extends Component{
                 <span className="editSave" style={{color:'grey'}} title="Edit &amp; Save" onClick={this.editAndSave}><FontAwesomeIcon icon={faPen} /></span>
 
                 {/*Modal to open popup*/}
-                <UseModal modalOpen={this.state.modalOpen} ImgTitle={this.props.ImgTitle} ImgSrc={this.props.ImgSrc} ImgDesc={this.props.ImgDesc} closeModal={this.closeModal} IsLiked={this.state.isLiked} LikeCount={this.state.likeCount} IsSaved={this.state.isSaved} FlipLike={this.flipLike} FlipSave={this.flipSave} EditSave={this.editAndSave}/>
+                <ImgModal modalOpen={this.state.modalOpen} ImgTitle={this.props.ImgTitle} ImgSrc={this.props.ImgSrc} ImgDesc={this.props.ImgDesc} closeModal={this.closeModal} IsLiked={this.state.isLiked} LikeCount={this.state.likeCount} IsSaved={this.state.isSaved} FlipLike={this.flipLike} FlipSave={this.flipSave} EditSave={this.editAndSave}/>
               </label> <br />
 
             </p>

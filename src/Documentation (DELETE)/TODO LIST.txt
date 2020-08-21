@@ -1,0 +1,15 @@
+1. Meme Category: (Done)
+ i   Normie
+ ii  Medium
+ iii Dank
+ iv  DARK
+
+2. Add Share option	(Done)
+3. Sticky NavBar 	(Done)
+
+4. Bar to select meme type (category). (Done)
+5. Add Search Bar	(Done)
+6. Add Lazy Loading
+7. Fix NavBar behaviour on resize
+8. 
+

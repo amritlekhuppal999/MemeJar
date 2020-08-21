@@ -7,7 +7,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDownload, faEye, faThumbsUp, faBookmark, faPen, faPlay} from '@fortawesome/free-solid-svg-icons';
 import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import UseModal from '../../components/modal/modal.jsx';
+import AudioModal from '../../components/modal/audioModal.jsx';
+import PageHeader from '../../components/pageHeader/pageHeader.jsx';
 
 toast.configure();
 class Audio extends Component {
@@ -17,7 +18,11 @@ class Audio extends Component {
   }
 
   render(){
-    return( <AudioBody /> );
+    return(
+      <div className="audioBody">
+        <AudioBody />
+      </div>
+    );
   }
 }
 export default Audio;
@@ -45,8 +50,10 @@ class AudioBody extends Component{
             <div className="card card-default"> {/*text-white bg-dark*/}
 
                 {/*Card Header*/}
-                <div className="card-header">
-                  <div className="card-title float-right"><b>Add Search Bar</b></div>
+                <div className="card-header" style={{paddingBottom:"0px"}}>
+                  <div className="card-title">
+                    <PageHeader />
+                  </div>
                 </div>
 
                 {/*Card Body*/}
@@ -169,7 +176,7 @@ class SubCardGroup extends Component{
                 <span className="editSave" style={{color:'grey'}} title="Edit &amp; Save" onClick={this.editAndSave}><FontAwesomeIcon icon={faPen} /></span>
 
                 {/*Modal to open popup*/}
-                <UseModal modalOpen={this.state.modalOpen} ImgTitle={this.props.ImgTitle} ImgSrc={this.props.ImgSrc} ImgDesc={this.props.ImgDesc} closeModal={this.closeModal} IsLiked={this.state.isLiked} LikeCount={this.state.likeCount} IsSaved={this.state.isSaved} FlipLike={this.flipLike} FlipSave={this.flipSave} EditSave={this.editAndSave}/>
+                <AudioModal modalOpen={this.state.modalOpen} ImgTitle={this.props.ImgTitle} ImgSrc={this.props.ImgSrc} ImgDesc={this.props.ImgDesc} closeModal={this.closeModal} IsLiked={this.state.isLiked} LikeCount={this.state.likeCount} IsSaved={this.state.isSaved} FlipLike={this.flipLike} FlipSave={this.flipSave} EditSave={this.editAndSave}/>
               </label> <br />
 
             </p>

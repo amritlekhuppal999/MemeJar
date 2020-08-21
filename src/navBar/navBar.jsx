@@ -48,7 +48,7 @@ class NavBar extends Component{
 
     return(
       <Router>
-        <nav className="navbar navbar-expand-lg navbar-light bg-dark">
+        <nav className="navbar navbar-expand-lg navbar-light bg-dark makeSticky">
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav">
               {tabMenu}
@@ -65,9 +65,9 @@ class NavBar extends Component{
   }
 
   MenuClick(index){
-    this.state.tabLink.filter((xxx, index) => {
-      if(xxx.isActive === true){
-        xxx.isActive = false;
+    this.state.tabLink.filter((obj, index) => {
+      if(obj.isActive){
+        obj.isActive = false;
       }
     });
     //console.log(myArr);

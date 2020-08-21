@@ -3,27 +3,34 @@ import './video.css';
 import ImgMist from '../#indesign/mist.jpg';
 import ImgNature from '../#indesign/nature.jpg';
 import ImgOcean from '../#indesign/ocean.jpg';
+import AppleSeed from '../#indesign/videos/AOT_APPLE_SEED.mp4';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faDownload, faEye, faThumbsUp, faBookmark, faPen, faPlay} from '@fortawesome/free-solid-svg-icons';
+import { faDownload, faEye, faThumbsUp, faBookmark, faPen, faPlay, faShare} from '@fortawesome/free-solid-svg-icons';
 import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import UseModal from '../../components/modal/modal.jsx';
+import VideoModal from '../../components/modal/videoModal.jsx';
+import ShareModal from '../../components/modal/shareModal.jsx';
+import PageHeader from '../../components/pageHeader/pageHeader.jsx';
 
 toast.configure();
-class Audio extends Component {
+class Video extends Component {
   constructor(props) {
     super(props);
     this.state = {};
   }
 
   render(){
-    return( <AudioBody /> );
+    return(
+      <div className="videoBody">
+        <VideoBody />
+      </div>
+    );
   }
 }
-export default Audio;
+export default Video;
 
 {/*VideoBody Component*/}
-class AudioBody extends Component{
+class VideoBody extends Component{
   render(){
     return(
       <div className="content-wrapper">
@@ -46,8 +53,10 @@ class AudioBody extends Component{
             <div className="card card-default"> {/*text-white bg-dark*/}
 
               {/*Card Header*/}
-              <div className="card-header">
-                <div className="card-title float-right"><b>Add Search Bar</b></div>
+              <div className="card-header" style={{paddingBottom:"0"}}>
+                <div className="card-title">
+                  <PageHeader />
+                </div>
               </div>
 
               {/*Card Body*/}
@@ -68,30 +77,57 @@ class AudioBody extends Component{
 class CardGorup extends Component{
   constructor(props){
     super(props);
+
     this.state = {
-      audioMemeCard: [
-        {imgTitle: 'Video Card 1', imgSrc: ImgMist, imgDesc: 'desc 1', imgUpdate: 'Last updated 1 mins ago'},
-        {imgTitle: 'Video Card 2', imgSrc: ImgNature, imgDesc: 'desc 2', imgUpdate: 'Last updated 2 mins ago'},
-        {imgTitle: 'Video Card 3', imgSrc: ImgOcean, imgDesc: 'desc 3', imgUpdate: 'Last updated 3 mins ago'},
-        {imgTitle: 'Video Card 4', imgSrc: ImgOcean, imgDesc: 'desc 4', imgUpdate: 'Last updated 4 mins ago'},
-        {imgTitle: 'Video Card 5', imgSrc: ImgOcean, imgDesc: 'desc 5', imgUpdate: 'Last updated 5 mins ago'}
+      videoMemeCard: [
+        {vidTitle: 'Video Card 1', vidSrc: AppleSeed, vidThubmnail: ImgMist, vidDesc: 'desc 1', vidUpdate: 'Last updated 1 mins ago', category: 'normie'},
+        {vidTitle: 'Video Card 2', vidSrc: AppleSeed, vidThubmnail: ImgMist, vidDesc: 'desc 2', vidUpdate: 'Last updated 2 mins ago', category: 'medium'},
+        {vidTitle: 'Video Card 3', vidSrc: AppleSeed, vidThubmnail: ImgMist, vidDesc: 'desc 3', vidUpdate: 'Last updated 3 mins ago', category: 'dank'},
+        {vidTitle: 'Video Card 4', vidSrc: AppleSeed, vidThubmnail: ImgMist, vidDesc: 'desc 4', vidUpdate: 'Last updated 4 mins ago', category: 'dank'},
+        {vidTitle: 'Video Card 5', vidSrc: AppleSeed, vidThubmnail: ImgMist, vidDesc: 'desc 5', vidUpdate: 'Last updated 5 mins ago', category: 'dark'}
       ],
+      userPref: ['normie', 'medium', 'dank', 'dark'],
+      shareModal: {
+        modalOpen: false,
+        shareLink: '',
+      }
     };
+    this.shareItem = this.shareItem.bind(this);
+    this.closeShare = this.closeShare.bind(this);
   }
 
   render(){
-    let myCard = this.state.audioMemeCard.map((itemObj, index) => {
-      return(
-        <SubCardGroup key={index} ImgTitle={itemObj.imgTitle} ImgSrc={itemObj.imgSrc} ImgDesc={itemObj.imgDesc} ImgUpdate={itemObj.imgUpdate}/>
-      );
+    let myCard = this.state.videoMemeCard.map((itemObj, index) => {
+      if(this.state.userPref.includes(itemObj.category)){
+        return(
+          <SubCardGroup key={index} VidTitle={itemObj.vidTitle} VidSrc={itemObj.vidSrc} VidDesc={itemObj.vidDesc} VidUpdate={itemObj.vidUpdate} VidThumbnail={itemObj.vidThubmnail} VidCategory={itemObj.category} Share={this.shareItem} />
+        );
+      }
     });
 
     return(
       <div className="row">
         {myCard}
+        {/*<VideoModal />*/}
+        <ShareModal ModalProps={this.state.shareModal} CloseShareModal={this.closeShare} />
       </div>
     );
   }
+
+  //SHARE MODAL FUNCTIONS -----------------------------------------------------
+  shareItem(objPara){
+    console.log(objPara.shareLink);
+    let chanegShare = {...this.state.shareModal, modalOpen: true, shareLink: objPara.shareLink};
+    this.setState({
+      shareModal: chanegShare
+    });
+  }
+  closeShare(){
+    this.setState({
+      shareModal: {modalOpen: false}
+    });
+  }
+  //---------------------------------------------------------------------------
 }
 
 {/*SubCardGroup Component*/}
@@ -131,6 +167,7 @@ class SubCardGroup extends Component{
       },
       modalOpen: false,
     };
+
     this.flipLike = this.flipLike.bind(this);
     this.flipSave = this.flipSave.bind(this);
     this.editAndSave = this.editAndSave.bind(this);
@@ -139,17 +176,29 @@ class SubCardGroup extends Component{
   }
 
   render(){
-    let likeColor, saveColor, peopleLiked;
+    let likeColor, saveColor, peopleLiked, loadVideoModal;
     this.state.isLiked ? likeColor = {color: 'blue'} : likeColor = {color: 'grey'};
     this.state.isSaved ? saveColor = {color: 'red'} : saveColor = {color: 'grey'};
     this.state.likeCount == 0 ? peopleLiked = `0 Likes` : peopleLiked = `${this.state.likeCount} people liked it`;
 
+    let shareVidObj = {
+      shareLink: this.props.VidSrc,
+      mimeType: 'video'
+    }
+
+    {/*Conditional Rendering of VideoModal*/}
+    if(this.state.modalOpen){
+      loadVideoModal = <VideoModal modalOpen={this.state.modalOpen} VidTitle={this.props.VidTitle} VidSrc={this.props.VidSrc} VidDesc={this.props.VidDesc} closeModal={this.closeModal} IsLiked={this.state.isLiked} LikeCount={this.state.likeCount} IsSaved={this.state.isSaved} FlipLike={this.flipLike} FlipSave={this.flipSave} EditSave={this.editAndSave} />;
+    }
+    else{ loadVideoModal = ''; }
+
     return(
       <div className="col-md-3" style={{padding:'0', textAlign:"left"}}>
         <div className="card" style={this.state.cardStyle}> {/*"width: 18rem;"*/}
-          <img className="card-img-top imgxx" src={this.props.ImgSrc} alt="Card image" style={this.state.imgStyle} onClick={this.showModal} />
+          <img className="card-img-top imgxx" src={this.props.VidThumbnail} alt="Card image" style={this.state.imgStyle} onClick={this.showModal} />
+
           <div className="card-body">
-            <h5 className="card-title">{this.props.ImgTitle}</h5>
+            <h5 className="card-title">{this.props.VidTitle}</h5>
             {/*<p className="card-text">{this.props.ImgDesc}</p>*/}
 
             {/*Like Count*/}
@@ -167,17 +216,18 @@ class SubCardGroup extends Component{
                 <span className="cardSave" style={saveColor} title="Save" onClick={this.flipSave}><FontAwesomeIcon icon={faBookmark} /></span> &nbsp;
 
                 {/*Edit & Save (Should open modal)*/}
-                <span className="editSave" style={{color:'grey'}} title="Edit &amp; Save" onClick={this.editAndSave}><FontAwesomeIcon icon={faPen} /></span>
+                <span className="editSave" style={{color:'grey'}} title="Edit &amp; Save" onClick={this.editAndSave}><FontAwesomeIcon icon={faPen} /></span> &nbsp;
+
+                {/*Share*/}
+                <span className="vidShare" style={{color:'grey'}} title="Share" onClick={() => {this.props.Share(shareVidObj)}}><FontAwesomeIcon icon={faShare} /></span>
 
                 {/*Modal to open popup*/}
-                <UseModal modalOpen={this.state.modalOpen} ImgTitle={this.props.ImgTitle} ImgSrc={this.props.ImgSrc} ImgDesc={this.props.ImgDesc} closeModal={this.closeModal} IsLiked={this.state.isLiked} LikeCount={this.state.likeCount} IsSaved={this.state.isSaved} FlipLike={this.flipLike} FlipSave={this.flipSave} EditSave={this.editAndSave}/>
-              </label> <br />
+                {loadVideoModal}
 
+              </label>
             </p>
-
           </div>
         </div>
-
       </div>
     );
   }

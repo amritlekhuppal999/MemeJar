@@ -1,8 +1,8 @@
-.video{
-  color:pink;
+.videoBody{
+  margin-top:60px;
 }
 
-.cardLike, .cardSave, .editSave{
+.cardLike, .cardSave, .editSave, .vidShare{
   cursor: pointer;
 }
 .optBTN{
